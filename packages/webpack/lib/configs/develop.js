@@ -85,8 +85,6 @@ module.exports = function getConfig(config, name) {
       pathinfo: true,
       filename: getAssetPath(`${config.name}.js`),
       chunkFilename: getAssetPath(`${config.name}-[id].js`),
-      devtoolModuleFilenameTemplate: (info) =>
-        relative(config.rootDir, info.absoluteResourcePath),
     },
     resolve: {
       modules: getModules(config.rootDir),

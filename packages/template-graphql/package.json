@@ -7,7 +7,10 @@
     "locations": [
       "/"
     ],
-    "graphqlUri": "https://www.graphqlhub.com/graphql"
+    "graphqlUri": "https://www.graphqlhub.com/graphql",
+    "browsers": [
+      "last 1 chrome versions"
+    ]
   },
   "scripts": {
     "start": "hops start",

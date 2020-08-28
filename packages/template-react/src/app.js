@@ -1,8 +1,10 @@
-import { Miss, render } from 'hops';
-import React from 'react';
+/** @jsx createElement */
+import { Miss, render, importComponent } from 'hops';
+import { createElement } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import Counter from './counter';
-import Home from './home';
+
+const Home = importComponent(() => import('./home'));
+const Counter = importComponent(() => import('./counter'));
 
 const App = () => (
   <div>

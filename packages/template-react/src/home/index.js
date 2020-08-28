@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx createElement */
+import { createElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styles from './styles.css';
 

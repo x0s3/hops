@@ -1,4 +1,4 @@
-const { dirname, relative } = require('path');
+const { dirname } = require('path');
 const {
   EnvironmentPlugin,
   HashedModuleIdsPlugin,
@@ -30,9 +30,7 @@ module.exports = function getConfig(config, name) {
           require.resolve('@babel/preset-env'),
           {
             modules: false,
-            useBuiltIns: 'usage',
             targets: { browsers: config.browsers },
-            corejs: 3,
             include: [],
             exclude: [],
           },
@@ -91,8 +89,6 @@ module.exports = function getConfig(config, name) {
       pathinfo: true,
       filename: getAssetPath(`${config.name}-[chunkhash:12].js`),
       chunkFilename: getAssetPath(`${config.name}-[id]-[chunkhash:12].js`),
-      devtoolModuleFilenameTemplate: (info) =>
-        relative(config.rootDir, info.absoluteResourcePath),
     },
     resolve: {
       modules: getModules(config.rootDir),
@@ -102,6 +98,9 @@ module.exports = function getConfig(config, name) {
           require.resolve('regenerator-runtime/package.json')
         ),
         'core-js': dirname(require.resolve('core-js/package.json')),
+        react: 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
       },
       extensions: ['.mjs', '.js'],
       mainFields: [

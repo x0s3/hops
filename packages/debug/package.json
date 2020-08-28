@@ -1,0 +1,10 @@
+{
+  "name": "hops-debug",
+  "version": "0.0.0",
+  "main": "node.js",
+  "browser": "browser.js",
+  "sideEffects": false,
+  "dependencies": {
+    "debug": "^4.1.1"
+  }
+}

@@ -1,14 +1,12 @@
-const React = require('react');
-const { Consumer } = require('./context');
+import { createElement } from 'react';
+import context from './context';
 
-function withServerData(Component) {
+export default function withServerData(Component) {
   return class WithServerData extends React.Component {
     render() {
-      return React.createElement(Consumer, {}, (data) =>
-        React.createElement(Component, { ...this.props, serverData: data })
+      return createElement(context.Consumer, {}, (data) =>
+        createElement(Component, { ...this.props, serverData: data })
       );
     }
   };
 }
-
-module.exports = withServerData;

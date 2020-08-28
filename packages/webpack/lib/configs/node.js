@@ -100,8 +100,6 @@ module.exports = function getConfig(config, name) {
       pathinfo: true,
       filename: config.serverFile,
       libraryTarget: 'commonjs2',
-      devtoolModuleFilenameTemplate: (info) =>
-        resolve(info.absoluteResourcePath),
     },
     resolve: {
       modules: getModules(config.rootDir),

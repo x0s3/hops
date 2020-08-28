@@ -1,9 +1,9 @@
 /* eslint-env browser */
 
-if (typeof window.EventSource === 'undefined') {
-  window.EventSource = require('event-source-polyfill').EventSourcePolyfill;
-}
+// if (typeof window.EventSource === 'undefined') {
+//   window.EventSource = require('event-source-polyfill').EventSourcePolyfill;
+// }
 
-require('webpack-hot-middleware/client');
+import 'webpack-hot-middleware/client';
 
-require('./build');
+import './build';
