@@ -6,14 +6,8 @@ const {
   },
 } = require('hops-mixin');
 
-const { ApolloProvider } = require('react-apollo');
-const { default: ApolloClient } = require('apollo-client');
-const { HttpLink } = require('apollo-link-http');
-const {
-  InMemoryCache,
-  IntrospectionFragmentMatcher,
-  HeuristicFragmentMatcher,
-} = require('apollo-cache-inmemory');
+const { ApolloProvider, ApolloClient, HttpLink } = require('@apollo/client');
+const { InMemoryCache } = require('@apollo/client/cache');
 require('cross-fetch/polyfill');
 
 class GraphQLMixin extends Mixin {
@@ -53,21 +47,11 @@ class GraphQLMixin extends Mixin {
   }
 
   getApolloCache() {
-    return (
-      this.options.cache ||
-      new InMemoryCache({
-        fragmentMatcher: this.createFragmentMatcher(),
-      }).restore(global['APOLLO_STATE'])
-    );
-  }
-
-  createFragmentMatcher() {
-    if (global['APOLLO_FRAGMENT_TYPES']) {
-      return new IntrospectionFragmentMatcher({
-        introspectionQueryResultData: global['APOLLO_FRAGMENT_TYPES'],
-      });
-    }
-    return new HeuristicFragmentMatcher();
+    return this.options.cache || global['APOLLO_FRAGMENT_TYPES']
+      ? new InMemoryCache({
+          possibleTypes: global['APOLLO_FRAGMENT_TYPES'],
+        }).restore(global['APOLLO_STATE'])
+      : new InMemoryCache().restore(global['APOLLO_STATE']);
   }
 
   enhanceElement(reactElement) {

@@ -8,15 +8,14 @@ const {
   },
 } = require('hops-mixin');
 
-const { ApolloProvider, getMarkupFromTree } = require('react-apollo');
-const { default: ApolloClient } = require('apollo-client');
-const { ApolloLink } = require('apollo-link');
-const { HttpLink } = require('apollo-link-http');
 const {
-  InMemoryCache,
-  IntrospectionFragmentMatcher,
-  HeuristicFragmentMatcher,
-} = require('apollo-cache-inmemory');
+  ApolloProvider,
+  ApolloClient,
+  HttpLink,
+  ApolloLink,
+} = require('@apollo/client');
+const { getMarkupFromTree } = require('@apollo/client/react/ssr');
+const { InMemoryCache } = require('@apollo/client/cache');
 const fetch = require('cross-fetch');
 
 let introspectionResult = undefined;
@@ -88,18 +87,9 @@ class GraphQLMixin extends Mixin {
   }
 
   getApolloCache() {
-    return (
-      this.options.cache ||
-      new InMemoryCache({ fragmentMatcher: this.createFragmentMatcher() })
-    );
-  }
-
-  createFragmentMatcher() {
-    return !introspectionResult
-      ? new HeuristicFragmentMatcher()
-      : new IntrospectionFragmentMatcher({
-          introspectionQueryResultData: introspectionResult,
-        });
+    return this.options.cache || introspectionResult
+      ? new InMemoryCache({ possibleTypes: introspectionResult })
+      : new InMemoryCache();
   }
 
   async renderToFragments(element) {
@@ -132,7 +122,7 @@ class GraphQLMixin extends Mixin {
       globals: {
         ...data.globals,
         APOLLO_FRAGMENT_TYPES: introspectionResult,
-        APOLLO_STATE: this.getApolloClient().cache.extract(),
+        APOLLO_STATE: this.getApolloClient().extract(),
       },
     };
   }

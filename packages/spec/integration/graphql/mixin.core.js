@@ -9,7 +9,7 @@ const failedResponse = {
   ],
 };
 const erroneousResponse = {
-  data: { foo: 'bar' },
+  data: { foo: 'bar', bar: null },
   errors: [
     {
       message: 'Could not resolve fields',

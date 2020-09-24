@@ -1,6 +1,6 @@
 const { Mixin } = require('hops-mixin');
 const fetch = require('cross-fetch');
-const { HttpLink } = require('apollo-link-http');
+const { HttpLink } = require('@apollo/client');
 
 const customFetch = (serverAddress) => (uri, options) => {
   const urlSuffix =
